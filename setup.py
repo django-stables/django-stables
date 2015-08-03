@@ -10,7 +10,12 @@ setup(
     author_email='tyson@clugg.net',
     url='https://github.com/django-stables/django-stables',
     license='MIT',
-    packages=['stables'],
+    packages=[
+        'stables',
+    ],
+    scripts=[
+        'manage.py',
+    ],
     install_requires=[
         'django>=1.8',
     ],
