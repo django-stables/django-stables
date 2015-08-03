@@ -18,6 +18,7 @@ setup(
     ],
     install_requires=[
         'django>=1.8',
+        'psycopg2',
     ],
     tests_require=[
         'tox>=2.1',
