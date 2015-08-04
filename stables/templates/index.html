@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<title>Django Stables</title>
+<h1>Django Stables</h1>
+<table>
+	<thead>
+		<tr>
+			<th>Django version →</th>{% for version in versions %}
+			<th>{{ version }}</th>{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+		<tr>{% for project in projects %}
+			<th>{{ project }}</th>{% for status in project.status %}
+			<td>{{ status }}</td>{% endfor %}
+		</tr>{% endfor %}
+	</tobdy>
+</table>
