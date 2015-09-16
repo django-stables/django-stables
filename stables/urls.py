@@ -15,7 +15,19 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from stables.views import BadgeView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(
+        r''.join([
+            r'^badge',
+            r'/(?P<package_name>[^/]+)',
+            r'/(?P<package_version>[^/]+)',
+            r'/(?P<factor_name>[^/]+)',
+            r'/(?P<factor_version>[^/]+)',
+            r'/$',
+        ]),
+        BadgeView.as_view(),
+    ),
 ]
