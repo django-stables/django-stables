@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 import django.contrib.postgres.fields.jsonb
 from django.db import migrations, models
-import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -18,11 +17,11 @@ class Migration(migrations.Migration):
             name='Commit',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.URLField()),
+                ('commit_url', models.URLField()),
             ],
         ),
         migrations.CreateModel(
-            name='Project',
+            name='Package',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255, unique=True)),
@@ -30,11 +29,12 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='ProjectStatus',
+            name='PackageVersion',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('version', models.CharField(max_length=50)),
                 ('status', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stables.Project')),
+                ('package', models.ForeignKey(to='stables.Package')),
             ],
         ),
         migrations.CreateModel(
@@ -43,20 +43,13 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('installed_packages', django.contrib.postgres.fields.jsonb.JSONField()),
                 ('result', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stables.Project')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Version',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('version', models.CharField(max_length=50)),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stables.Project')),
+                ('commit_url', models.URLField()),
+                ('package_version', models.ForeignKey(to='stables.PackageVersion')),
             ],
         ),
         migrations.AddField(
             model_name='commit',
-            name='project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='stables.Project'),
+            name='package',
+            field=models.ForeignKey(to='stables.Package'),
         ),
     ]
